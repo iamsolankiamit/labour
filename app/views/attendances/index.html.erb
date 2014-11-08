@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-4"><strong>Date:</strong> <%= Date.today %></div>
+
+      <div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+  <td>Labour name</td>
+  <td>work Name</td>
+  <td>Hours</td>
+  <td>In</td>
+  <td>out</td>
+</thead>
+<tbody>
+<%= form_for 'presence', url: attendances_path do %>
+  <% @labours.each_with_index do |labour,i| %>
+  <tr>
+    <%= hidden_field_tag "presence[attendance][#{i}][date]" , Date.today %>
+  <%= error_span(@attendance[:date]) %>
+  <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>
+  <td><%= text_field_tag "", "#{labour.first_name} #{labour.last_name}" %></td>
+  <%= error_span(@attendance[:labour_id]) %>
+  <td><%= text_field_tag "presence[attendance][#{i}][work_id]", labour.id %></td>
+  <%= error_span(@attendance[:work_id]) %>
+  <td><%= select_tag "presence[attendance][#{i}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true %></td>
+  <%= error_span(@attendance[:hours]) %>
+  <td><%= text_field_tag "presence[attendance][#{i}][in]" %></td>
+  <%= error_span(@attendance[:in]) %>
+  <td><%= text_field_tag "presence[attendance][#{i}][out]" %></td>
+  <%= error_span(@attendance[:out]) %>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+</div>
+  <button type="submit">Submit Attendance</button>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                attendances_path, :class => 'btn btn-default' %>
+<% end %>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<%= simple_form_for @work, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :start_date %>
+  <%= error_span(@work[:start_date]) %>
+  <%= f.input :end_date %>
+  <%= error_span(@work[:end_date]) %>
+  <%= f.input :client_id %>
+  <%= error_span(@work[:client_id]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                works_path, :class => 'btn btn-default' %>
+<% end %>

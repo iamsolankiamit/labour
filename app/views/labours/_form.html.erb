@@ -1,0 +1,22 @@
+<%= simple_form_for @labour, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :first_name %>
+  <%= error_span(@labour[:first_name]) %>
+  <%= f.input :last_name %>
+  <%= error_span(@labour[:last_name]) %>
+  <%= f.input :phone_no %>
+  <%= error_span(@labour[:phone_no]) %>
+  <%= f.input :date_of_joining %>
+  <%= error_span(@labour[:date_of_joining]) %>
+  <%= f.input :salary_per_day %>
+  <%= error_span(@labour[:salary_per_day]) %>
+  <%= f.input :salary_for_hours %>
+  <%= error_span(@labour[:salary_for_hours]) %>
+  <%= f.input :on_vacation %>
+  <%= error_span(@labour[:on_vacation]) %>
+  <%= f.input :has_left %>
+  <%= error_span(@labour[:has_left]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                labours_path, :class => 'btn btn-default' %>
+<% end %>

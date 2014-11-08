@@ -1,0 +1,29 @@
+<%- model_class = Attendance -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:date) %>:</strong></dt>
+  <dd><%= @attendance.date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:labour_id) %>:</strong></dt>
+  <dd><%= @attendance.labour_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:work_id) %>:</strong></dt>
+  <dd><%= @attendance.work_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:hours) %>:</strong></dt>
+  <dd><%= @attendance.hours %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:in) %>:</strong></dt>
+  <dd><%= @attendance.in %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:out) %>:</strong></dt>
+  <dd><%= @attendance.out %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              attendances_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_attendance_path(@attendance), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              attendance_path(@attendance),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
