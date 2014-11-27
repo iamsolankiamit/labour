@@ -61,6 +61,26 @@ class LaboursController < ApplicationController
     end
   end
 
+  def salary
+    @labours = Labour.all
+  end
+
+  def bs
+    start = params[:start].to_date
+    end_date = params[:end].to_date
+    labour = Labour.find(params[:labour][:id])
+    labour.salary_per_day = params[:salary_per_day]
+    labour.save!
+    start.upto(end_date) do |date|
+      a = Attendance.where(labour_id: labour.id, date: date).first
+      unless a.nil?
+      salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+      a.salary = salary
+      a.update!(labour_id: labour.id, date: date, salary: salary)
+    end
+    end
+    redirect_to :back
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_labour
@@ -71,4 +91,4 @@ class LaboursController < ApplicationController
     def labour_params
       params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining, :salary_per_day, :salary_for_hours, :on_vacation, :has_left)
     end
-end
+  end

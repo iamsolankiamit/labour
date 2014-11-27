@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row">
+  <div>Date: <input type="text" id="datepicker" value="<%= Date.today %>"> </div>
+    <div class="col-sm-6">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <td>Labour</td>
+            <td>Amount</td>
+            <td>Comment</td>
+          </thead>
+          <tbody>
+
+<%= form_for 'payment', url: payments_path ,:html => {:autocomplete => "off"} do %>
+  <% @labours.each_with_index do |labour,i| %>
+            <tr>
+
+    <%= hidden_field_tag "payment[#{i}][date]", Date.today, class: "dates" %>
+  <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
+              <td><%= link_to "#{labour.first_name} #{labour.last_name}", payment_url(labour.id) %></td>
+              <td><%= text_field_tag "payment[#{i}][amount_paid]" %></td>
+              <td><%= text_field_tag "payment[#{i}][comment]" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-primary btn-large">Okay</button>
+            <% end %>
+
+    </div>
+    <div class="col-sm-6">
+      <h2><%= @labour.first_name %> <%= @labour.last_name %></h2>
+      Advanced Details: <%= @labours.first.account_setteled_on ? @labours.first.account_setteled_on : @labours.first.created_at.to_date %> to <%= Date.today %>.
+
+      <div style="border: 1px solid grey;"> Account Details
+  <table class="table table-borderd table-striped">
+    <thead>
+      <td>Sr no</td>
+      <td>Date</td>
+      <td>Amount</td>
+      <td>Comment</td>
+    </thead>
+    <tbody>
+      <% Payment.where("labour_id = ? and date between ? and ?", @labour.id,@labour.created_at.to_date, Date.today).each_with_index do |p,i| %>
+        <tr>
+          <td><%= i %></td>
+          <td><%= p.date %></td>
+          <td><%= p.amount_paid %></td>
+          <td><%= p.comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+      </div>
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <td>Attendance Total</td>
+            <td>
+                    <% hours = 0 %>
+      <% salary = 0 %>
+      <% advance = 0 %>
+      <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labour.id,@labour.created_at.to_date, Date.today).limit(1).each do |a|
+              hours += a.hours unless a.hours.nil?
+              salary += a.salary unless a.salary.nil?
+            end
+              %>
+            <%= number_with_precision( hours/@labours.first.salary_for_hours, precision: 2)  %>
+            </td>
+          </tr>
+          <tr>
+            <td>Total Advance</td>
+            <td>
+                    <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,@labour.created_at.to_date, Date.today).limit(1).each do |p|
+        advance += p.amount_paid unless p.amount_paid.nil?
+      end %>
+      <%= number_with_precision(advance, precision: 2) %>
+
+            </td>
+          </tr>
+          <tr>
+            <td>Net Payable</td>
+            <td>
+              <%= number_with_precision(salary - advance, precision: 2) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $("#datepicker").on("change", function(){
+      $(".dates").each(function(){
+        $(this).val($("#datepicker").val());
+      });
+  });
+</script>

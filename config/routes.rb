@@ -1,11 +1,22 @@
 Rails.application.routes.draw do
-  resources :attendances
+  get 'reports/index'
+  get 'reports/long'
+
+  resources :attendances do
+    get 'change', on: :collection
+    post 'bulk', on: :collection
+  end
 
   resources :works
 
+  resources :payments
+
   resources :clients
 
-  resources :labours
+  resources :labours do
+    get 'salary', on: :collection
+    post 'bs', on: :collection
+  end
 
   get 'home/index'
 

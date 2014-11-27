@@ -6,6 +6,7 @@ class AttendancesController < ApplicationController
   def index
     @attendance = Attendance.new
     @labours = Labour.all
+    @todays_attendance = Attendance.where("date = ? ", Date.today)
 
   end
 
@@ -28,17 +29,14 @@ class AttendancesController < ApplicationController
   # POST /attendances.json
   def create
     params[:presence][:attendance].each do |attendance|
-      logger.debug(attendance[1])
-    @attendance = Attendance.new(attendance[1])
+      @attendance = Attendance.new(attendance[1])
+      labour = Labour.find(@attendance.labour_id)
+      @attendance.salary = (labour.salary_per_day / labour.salary_for_hours)*@attendance.hours
+      @attendance.save
     end
     respond_to do |format|
-      if @attendance.save
-        format.html { redirect_to @attendance, notice: 'Attendance was successfully created.' }
+        format.html { redirect_to :back, notice: 'Attendance was successfully created.' }
         format.json { render :show, status: :created, location: @attendance }
-      else
-        format.html { render :new }
-        format.json { render json: @attendance.errors, status: :unprocessable_entity }
-      end
     end
   end
 
@@ -64,6 +62,24 @@ class AttendancesController < ApplicationController
       format.html { redirect_to attendances_url, notice: 'Attendance was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def change
+    @labours = Labour.all
+  end
+
+  def bulk
+    start = params[:start].to_date
+    end_date = params[:end].to_date
+    labour = Labour.find(params[:labour][:id])
+    work = params[:work][:id]
+    presence = params[:presence]
+    salary = (labour.salary_per_day / labour.salary_for_hours)*presence.to_f
+    start.upto(end_date) do |date|
+      a = Attendance.new(labour_id: labour.id, date: date, hours: presence, work_id: work, salary: salary)
+      a.save
+    end
+    redirect_to :back
   end
 
   private

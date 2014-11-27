@@ -1,0 +1,32 @@
+These are reports.
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table-bordered table-striped table">
+        <thead>
+          <td>Name</td>
+          <td>Month</td>
+          <td>Presenty</td>
+          <td>Salary</td>
+        </thead>
+        <tbody>
+        <% @labour.each do |labour| %>
+          <tr>
+            <td><%= labour.first_name %> <%= labour.last_name %> </td>
+            <td><%= params[:startdate] %></td>
+            <% hours = 0 %>
+            <% salary = 0 %>
+            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:enddate]).each do |a|
+              hours += a.hours unless a.hours.nil?
+              salary += a.salary unless a.salary.nil?
+            end
+              %>
+            <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
+            <td><%= number_with_precision(salary, :precision => 2) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
