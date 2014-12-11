@@ -7,6 +7,7 @@
   <button type="button" class="btn btn-default" id="p">P</button>
   <button type="button" class="btn btn-default" id="p1">P'</button>
   <button type="button" class="btn btn-default" id="p2">P"</button>
+
 </div>
       <div class="table-responsive">
 <table class="table table-bordered table-striped">
@@ -29,7 +30,7 @@
   <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
   <td><%= select_tag "presence[attendance][#{i}][work_id]", options_for_select(work_array) %></td>
   <%= error_span(@attendance[:work_id]) %>
-  <%  m = labour.attendances.last %>
+  <%  m = labour.attendances.where(date: @date).last %>
   <% m.nil? ? 0 : h = m.hours  %>
   <td><%= select_tag "presence[attendance][#{i}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}, h ), include_blank: true, class: "hours" %></td>
   <%= error_span(@attendance[:hours]) %>

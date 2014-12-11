@@ -6,11 +6,11 @@ class AttendancesController < ApplicationController
   def index
     @attendance = Attendance.new
     if params[:date]
-    @date = Date.strptime(params[:date],"%d-%m-%Y")
-  else
-    @date = Date.today
-  end
-    @labours = Labour.joins("LEFT OUTER JOIN attendances  ON attendances.labour_id = labours.id").where(:attendances => { :date => @date})
+      @date = Date.strptime(params[:date],"%d-%m-%Y")
+    else
+      @date = Date.today
+    end
+    @labours = Labour.includes(:attendances)
     @todays_attendance = Attendance.where("date = ? ", Date.today)
 
   end
@@ -34,16 +34,27 @@ class AttendancesController < ApplicationController
   # POST /attendances.json
   def create
     params[:presence][:attendance].each do |attendance|
-      @attendance = Attendance.new(attendance[1])
-      labour = Labour.find(@attendance.labour_id)
-      @attendance.salary = (labour.salary_per_day / labour.salary_for_hours)*@attendance.hours
-      @attendance.save
+      x = attendance[1]
+=begin
+Attendance.where(date: x["date"], labour_id: x["labour_id"]).first_or_initialize do |a|
+        labour = Labour.find(x['labour_id'])
+        a.salary = (labour.salary_per_day / labour.salary_for_hours)*(x["hours"].to_f)
+        a.hours = x["hours"]
+        a.work_id = x["work_id"]
+        a.in = x["in"]
+        a.out = x["out"]
+        a.save
+      end
+=end
+        labour = Labour.find(x['labour_id'])
+
+      Attendance.where({date: x["date"], labour_id: x["labour_id"]}).update_or_create({salary: (labour.salary_per_day / labour.salary_for_hours)*(x["hours"].to_f), hours: x["hours"], work_id: x["work_id"], in: x["in"], out: x["out"]})
     end
     respond_to do |format|
-        format.html { redirect_to :back, notice: 'Attendance was successfully created.' }
-        format.json { render :show, status: :created, location: @attendance }
+      format.html { redirect_to :back, notice: 'Attendance was successfully created.' }
+        #format.json { render :show, status: :created, location: @attendance }
+      end
     end
-  end
 
   # PATCH/PUT /attendances/1
   # PATCH/PUT /attendances/1.json
@@ -97,4 +108,4 @@ class AttendancesController < ApplicationController
     def attendance_params
       params.require(:attendance).permit(:date, :labour_id, :work_id, :hours, :in, :out)
     end
-end
+  end
