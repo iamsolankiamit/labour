@@ -10,7 +10,7 @@ class AttendancesController < ApplicationController
   else
     @date = Date.today
   end
-    @labours = Labour.joins("OUTER JOIN attendances  ON attendances.labour_id = labours.id").where(:attendances => { :date => @date})
+    @labours = Labour.joins("LEFT OUTER JOIN attendances  ON attendances.labour_id = labours.id").where(:attendances => { :date => @date})
     @todays_attendance = Attendance.where("date = ? ", Date.today)
 
   end
