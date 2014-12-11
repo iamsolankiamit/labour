@@ -5,7 +5,12 @@ class AttendancesController < ApplicationController
   # GET /attendances.json
   def index
     @attendance = Attendance.new
-    @labours = Labour.all
+    if params[:date]
+    @date = Date.strptime(params[:date],"%d-%m-%Y")
+  else
+    @date = Date.today
+  end
+    @labours = Labour.joins("OUTER JOIN attendances  ON attendances.labour_id = labours.id").where(:attendances => { :date => @date})
     @todays_attendance = Attendance.where("date = ? ", Date.today)
 
   end

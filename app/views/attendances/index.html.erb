@@ -1,10 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <div class="col-sm-4"><strong>Date:</strong> <%= Date.today %></div>
+      <div class="col-sm-4"><strong>Date:</strong><form action="/attendances" method="get"><input type="text" id="datepicker" name="date" value="<%= @date %>"><button value="submit" class="btn btn-primary">Go</button></form></div>
 <div class="btn-group" role="group" aria-label="...">
   <button type="button" class="btn btn-default" id="a">A </button>
   <button type="button" class="btn btn-default" id="p">P</button>
+  <button type="button" class="btn btn-default" id="p1">P'</button>
   <button type="button" class="btn btn-default" id="p2">P"</button>
 </div>
       <div class="table-responsive">
@@ -20,7 +21,7 @@
 <%= form_for 'presence', url: attendances_path do %>
   <% @labours.each_with_index do |labour,i| %>
   <tr>
-    <%= hidden_field_tag "presence[attendance][#{i}][date]" , Date.today %>
+    <%= hidden_field_tag "presence[attendance][#{i}][date]" , @date %>
   <%= error_span(@attendance[:date]) %>
   <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>
   <td><%= text_field_tag "", "#{labour.first_name} #{labour.last_name}" %></td>
@@ -28,7 +29,7 @@
   <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
   <td><%= select_tag "presence[attendance][#{i}][work_id]", options_for_select(work_array) %></td>
   <%= error_span(@attendance[:work_id]) %>
-  <%  m = Attendance.where("date = ? and labour_id =? ", Date.today, labour.id).first%>
+  <%  m = labour.attendances.last %>
   <% m.nil? ? 0 : h = m.hours  %>
   <td><%= select_tag "presence[attendance][#{i}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}, h ), include_blank: true, class: "hours" %></td>
   <%= error_span(@attendance[:hours]) %>
@@ -59,6 +60,11 @@
   $("#p").on('click', function(){
     $(".hours").each(function(){
         $(this).val(8);
+      });
+  });
+  $("#p1").on('click', function(){
+    $(".hours").each(function(){
+        $(this).val(10);
       });
   });
   $("#p2").on('click', function(){
