@@ -55,6 +55,13 @@
             </ul>
           </li>
           <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Add New Work", new_workclient_path %></li>
+              <li><%= link_to "View All Works", works_path %></li>
+            </ul>
+          </li>
+          <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Attendance<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Todays Attendance", new_attendance_path %></li>
