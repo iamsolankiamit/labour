@@ -5,4 +5,8 @@ class Work < ActiveRecord::Base
   def with_client_name
     "#{client.first_name} #{client.last_name}"
   end
+
+  def name_with_client_name
+    "#{client.first_name} #{client.last_name} - #{self.name}"
+  end
 end

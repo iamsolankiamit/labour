@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:start_date) %></th>
       <th><%= model_class.human_attribute_name(:end_date) %></th>
       <th><%= model_class.human_attribute_name(:client_id) %></th>
@@ -17,6 +18,7 @@
     <% @works.each do |work| %>
       <tr>
         <td><%= link_to work.id, work_path(work) %></td>
+  <td><%= work.name.nil? ? " - " : work.name%></td>
         <td><%= work.start_date %></td>
         <td><%= work.end_date %></td>
         <td><%= work.client_id %></td>

@@ -20,6 +20,10 @@
   <dd><%= @labour.on_vacation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:has_left) %>:</strong></dt>
   <dd><%= @labour.has_left %></dd>
+  <% unless @labour.work.nil? %>
+  <dt><strong><%= model_class.human_attribute_name(:work) %>:</strong></dt>
+  <dd><%= @labour.work.name_with_client_name %></dd>
+  <% end %>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

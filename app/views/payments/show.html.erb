@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-  <div>Date: <input type="text" id="datepicker" value="<%= Date.today %>"> </div>
+  <div>Date: <input type="text" id="datepicker"> </div>
     <div class="col-sm-6">
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -11,11 +11,11 @@
           </thead>
           <tbody>
 
-<%= form_for 'payment', url: payments_path ,:html => {:autocomplete => "off"} do %>
+<%= form_for 'payment', url: payments_path do %>
   <% @labours.each_with_index do |labour,i| %>
             <tr>
 
-    <%= hidden_field_tag "payment[#{i}][date]", Date.today, class: "dates" %>
+    <%= hidden_field_tag "payment[#{i}][date]" , Date.today %>
   <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
               <td><%= link_to "#{labour.first_name} #{labour.last_name}", payment_url(labour.id) %></td>
               <td><%= text_field_tag "payment[#{i}][amount_paid]" %></td>
@@ -31,8 +31,15 @@
     </div>
     <div class="col-sm-6">
       <h2><%= @labour.first_name %> <%= @labour.last_name %></h2>
-      Advanced Details: <%= @labours.first.account_setteled_on ? @labours.first.account_setteled_on : @labours.first.created_at.to_date %> to <%= Date.today %>.
+      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.created_at.to_date.strftime("%d-%m-%y") %> to <%= Date.today.strftime("%d-%m-%y") %>.
+      <%if @labour.account > 0 %>
+        Balance : <%= @labour.account %>
 
+      <%elsif @labour.account < 0 %>
+        Advance : <%= @labour.account %>
+<% else %>
+        No Balance.
+        <% end %>
       <div style="border: 1px solid grey;"> Account Details
   <table class="table table-borderd table-striped">
     <thead>
@@ -42,10 +49,15 @@
       <td>Comment</td>
     </thead>
     <tbody>
-      <% Payment.where("labour_id = ? and date between ? and ?", @labour.id,@labour.created_at.to_date, Date.today).each_with_index do |p,i| %>
+    <% if @labour.account_setteled_on.blank? %>
+    <% start_date = @labour.created_at %>
+  <% else %>
+    <% start_date = @labour.account_setteled_on + 1.day %>
+      <% end %>
+      <% Payment.where("labour_id = ? and date between ? and ?", @labour.id,start_date, Date.today).each_with_index do |p,i| %>
         <tr>
           <td><%= i %></td>
-          <td><%= p.date %></td>
+          <td><%= p.date.strftime("%d-%m-%y") %></td>
           <td><%= p.amount_paid %></td>
           <td><%= p.comment %></td>
         </tr>
@@ -61,39 +73,43 @@
                     <% hours = 0 %>
       <% salary = 0 %>
       <% advance = 0 %>
-      <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labour.id,@labour.created_at.to_date, Date.today).limit(1).each do |a|
+      <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, Date.today).each do |a|
               hours += a.hours unless a.hours.nil?
               salary += a.salary unless a.salary.nil?
             end
               %>
-            <%= number_with_precision( hours/@labours.first.salary_for_hours, precision: 2)  %>
+            <%= hours/@labour.salary_for_hours  %>
             </td>
           </tr>
           <tr>
             <td>Total Advance</td>
             <td>
-                    <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,@labour.created_at.to_date, Date.today).limit(1).each do |p|
+                    <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, Date.today).each do |p|
         advance += p.amount_paid unless p.amount_paid.nil?
       end %>
-      <%= number_with_precision(advance, precision: 2) %>
+      <%= advance %>
 
+            </td>
+          </tr>
+          <tr>
+            <td>Total Salary</td>
+            <td>
+              <%= salary %>
             </td>
           </tr>
           <tr>
             <td>Net Payable</td>
             <td>
-              <%= number_with_precision(salary - advance, precision: 2) %>
+              <%= net = salary - advance %>
             </td>
           </tr>
         </tbody>
       </table>
+      <%= simple_form_for :labour , method: "patch", url: labour_path(@labour), remote: true do |f|  -%>
+        <%= f.input :account_setteled_on , input_html: { id: "datepicker2"} %>
+        <%= f.hidden_field :account, value:(@labour.account + net )%>
+        <%= f.button :submit, class: "btn btn-primary", value: "Settle account" %>
+      <% end -%>
     </div>
   </div>
 </div>
-<script>
-  $("#datepicker").on("change", function(){
-      $(".dates").each(function(){
-        $(this).val($("#datepicker").val());
-      });
-  });
-</script>

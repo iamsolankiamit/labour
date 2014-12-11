@@ -15,10 +15,12 @@ class LaboursController < ApplicationController
   # GET /labours/new
   def new
     @labour = Labour.new
+    @works = Work.all
   end
 
   # GET /labours/1/edit
   def edit
+    @works = Work.all
   end
 
   # POST /labours
@@ -84,11 +86,11 @@ class LaboursController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_labour
-      @labour = Labour.find(params[:id])
+      @labour = Labour.includes(:work).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def labour_params
-      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining, :salary_per_day, :salary_for_hours, :on_vacation, :has_left)
+      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining,:account, :salary_per_day, :salary_for_hours, :on_vacation, :has_left, :work_id,:account_setteled_on)
     end
   end

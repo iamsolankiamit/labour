@@ -15,10 +15,13 @@ class WorksController < ApplicationController
   # GET /works/new
   def new
     @work = Work.new
+    @clients = Client.all
   end
 
   # GET /works/1/edit
   def edit
+    @clients = Client.all
+
   end
 
   # POST /works
@@ -69,6 +72,6 @@ class WorksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def work_params
-      params.require(:work).permit(:start_date, :end_date, :client_id)
+      params.require(:work).permit(:start_date, :end_date, :client_id, :name)
     end
 end

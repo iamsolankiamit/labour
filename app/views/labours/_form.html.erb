@@ -15,7 +15,7 @@
   <%= error_span(@labour[:on_vacation]) %>
   <%= f.input :has_left %>
   <%= error_span(@labour[:has_left]) %>
-
+  <%= f.input :work_id, collection: @works, value_method: :id, label_method: :name_with_client_name %>
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 labours_path, :class => 'btn btn-default' %>
