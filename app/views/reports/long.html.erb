@@ -29,7 +29,7 @@
 unless attendance.nil?
         sa += attendance.salary.to_f
         end %>
-        <% advance = Payment.where("date == ? and labour_id == ?", dat, @labour.id).first %>
+        <% advance = Payment.where("date = ? and labour_id = ?", dat, @labour.id).first %>
         <% ad += advance.amount_paid unless advance.nil? %>
           <tr>
             <td><%= dat %></td>
