@@ -7,7 +7,6 @@
     <% end -%>
     <% d = Date.new(params[:report]['for(1i)'].to_i,params[:report]['for(2i)'].to_i,params[:report]['for(3i)'].to_i) if params[:report] %>
     <% d ||= Date.today %>
-
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
         <thead>
@@ -22,7 +21,7 @@
           <% sa = 0.0 %>
           <% @labours.each do |labour| %>
           <tr>
-            <td><%=   labour.full_name %></td>
+            <td><%= labour.full_name %></td>
             <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
             <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
             <%
@@ -34,13 +33,10 @@
               <td><%= sa %></td>
               <% total_salary += sa %>
             </tr>
-
             <% end %>
-
           </tbody>
           <tfoot>
             <td></td>
-
             <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
             <td></td>
             <% end %>
