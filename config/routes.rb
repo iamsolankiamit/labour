@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'reports/index'
   get 'reports/long'
+  get 'reports/client'
 
   resources :attendances do
     get 'change', on: :collection

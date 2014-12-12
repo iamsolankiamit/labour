@@ -10,4 +10,13 @@ class ReportsController < ApplicationController
       @labour = Labour.all.first
     end
   end
+  def client
+    @clients = Client.all
+    @labours = Labour.all
+    if params[:client]
+      @client = Client.find(params[:client][:id])
+    else
+      @client = Client.all.first
+    end
+  end
 end
