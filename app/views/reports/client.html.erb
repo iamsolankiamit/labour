@@ -1,54 +1,52 @@
-
-
 <div class="container">
   <div class="row">
-<%= form_for 'x', url: "/reports/client ", method: "get" do |f| -%>
-  <%= collection_select(:client, :id, @clients, :id, :first_name, {selected: params[:labour] ? params[:labour][:id] : 1 }) %>
+    <%= form_for 'x', url: "/reports/client ", method: "get" do |f| -%>
+    <%= collection_select(:client, :id, @clients, :id, :first_name, {selected: params[:labour] ? params[:labour][:id] : 1 }) %>
     <%= date_select("report", "for", discard_day: true, default: Date.today) %>
-  <button type="submit" class="btn btn-primary" value="submit">Submit</button>
-<% end -%>
-<% d = Date.new(params[:report]['for(1i)'].to_i,params[:report]['for(2i)'].to_i,params[:report]['for(3i)'].to_i) if params[:report] %>
-        <% d ||= Date.today %>
+    <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+    <% end -%>
+    <% d = Date.new(params[:report]['for(1i)'].to_i,params[:report]['for(2i)'].to_i,params[:report]['for(3i)'].to_i) if params[:report] %>
+    <% d ||= Date.today %>
 
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
         <thead>
           <td>Name</td>
-        <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
-<td><%= dat.strftime("%d") %></td>
+          <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
+          <td><%= dat.strftime("%d") %></td>
           <% end %>
           <td>Total Salary</td>
         </thead>
         <tbody>
-        <% total_salary = 0.0 %>
-        <% sa = 0.0 %>
-        <% @labours.each do |labour| %>
+          <% total_salary = 0.0 %>
+          <% sa = 0.0 %>
+          <% @labours.each do |labour| %>
           <tr>
-        <td><%=   labour.full_name %></td>
-        <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
-        <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
-        <%
-unless attendance.nil?
-        sa += attendance.salary.to_f
-        end %>
-            <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
-          <% end %>
-          <td><%= sa %></td>
-          <% total_salary += sa %>
-          </tr>
+            <td><%=   labour.full_name %></td>
+            <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
+            <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
+            <%
+            unless attendance.nil?
+              sa += attendance.salary.to_f
+              end %>
+              <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
+              <% end %>
+              <td><%= sa %></td>
+              <% total_salary += sa %>
+            </tr>
 
-          <% end %>
+            <% end %>
 
-        </tbody>
-<tfoot>
-  <td></td>
+          </tbody>
+          <tfoot>
+            <td></td>
 
-        <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
-<td></td>
-          <% end %>
-          <td><%= total_salary %></td>
-</tfoot>
-      </table>
+            <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
+            <td></td>
+            <% end %>
+            <td><%= total_salary %></td>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
-</div>
