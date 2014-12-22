@@ -33,10 +33,10 @@
       <h2><%= @labours.first.first_name %> <%= @labours.first.last_name %></h2>
       Advanced Details: <%= !@labours.first.account_setteled_on.blank? ? (@labours.first.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labours.first.date_of_joining.to_date.strftime("%d-%m-%y") %> to <%= Date.today.strftime("%d-%m-%y") %>.
       <%if @labours.first.account > 0 %>
-        Advance : <%= @labours.first.account %>
+        Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
 
       <%elsif @labours.first.account < 0 %>
-        Advance : <%= @labours.first.account %>
+        Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
 <% else %>
         No Balance.
         <% end %>
@@ -59,7 +59,7 @@
         <tr>
           <td><%= i %></td>
           <td><%= p.date.strftime("%d-%m-%y") %></td>
-          <td><%= p.amount_paid %></td>
+          <td><%= number_with_precision(p.amount_paid, precision: 2) %></td>
           <td><%= p.comment %></td>
         </tr>
       <% end %>
@@ -79,7 +79,7 @@
               salary += a.salary unless a.salary.nil?
             end
               %>
-            <%= hours/@labours.first.salary_for_hours  %>
+            <%= number_with_precision(hours/@labours.first.salary_for_hours, precision: 2)  %>
             </td>
           </tr>
           <tr>
@@ -88,20 +88,20 @@
                     <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labours.first.id,start_date, Date.today).each do |p|
         advance += p.amount_paid unless p.amount_paid.nil?
       end %>
-      <%= advance %>
+      <%= number_with_precision(advance, precision: 2) %>
 
             </td>
           </tr>
           <tr>
             <td>Total Salary</td>
             <td>
-              <%= salary %>
+              <%= number_with_precision(salary, precision: 2) %>
             </td>
           </tr>
           <tr>
             <td>Net Payable</td>
             <td>
-              <%= net = salary - advance %>
+              <%= number_with_precision(net = salary - advance, precision: 2) %>
             </td>
           </tr>
         </tbody>
