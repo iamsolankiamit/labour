@@ -11,11 +11,11 @@
           </thead>
           <tbody>
 
-<%= form_for 'payment', url: payments_path do %>
+<%= simple_form_for 'payment', url: payments_path do %>
   <% @labours.each_with_index do |labour,i| %>
             <tr>
 
-    <%= hidden_field_tag "payment[#{i}][date]" , Date.today %>
+    <%= hidden_field_tag "payment[#{i}][date]" , Date.today, class: "date" %>
   <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
               <td><%= link_to "#{labour.first_name} #{labour.last_name}", payment_url(labour.id) %></td>
               <td><%= text_field_tag "payment[#{i}][amount_paid]" %></td>
@@ -113,3 +113,10 @@
     </div>
   </div>
 </div>
+<script>
+  $("#datepicker").on("change", function(){
+    $(".date").each(function(){
+      $(this).val($("#datepicker").value);
+    });
+  });
+</script>
