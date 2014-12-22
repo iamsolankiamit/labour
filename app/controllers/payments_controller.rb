@@ -15,6 +15,7 @@ class PaymentsController < ApplicationController
     params[:payment].each do |payment|
       logger.debug(payment[1])
       @payment = Payment.new(payment[1])
+      @payment.date = Date.strptime(payment[1]["date"],"%d-%m-%Y")
       unless @payment.amount_paid.blank?
       @payment.save
     end
