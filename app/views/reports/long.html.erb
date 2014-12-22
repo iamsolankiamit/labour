@@ -33,7 +33,6 @@ unless attendance.nil?
         <% ad += advance.amount_paid unless advance.nil? %>
           <tr>
             <td><%= dat %></td>
-
             <td><%= attendance.nil? ? "---" : Work.includes(:client).find(attendance.work_id).client.first_name %></td>
             <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
             <td><%= attendance.nil? ? "x" : attendance.in %></td>

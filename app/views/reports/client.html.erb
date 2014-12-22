@@ -21,7 +21,6 @@
           <% sa = 0.0 %>
           <% @labours.each do |labour| %>
 
-          <% total_salary = 0.0 %>
           <% sa = 0.0 %>
           <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
             <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
