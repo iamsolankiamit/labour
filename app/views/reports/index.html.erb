@@ -22,6 +22,8 @@
               %>
             <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
             <td><%= number_with_precision(salary, :precision => 2) %></td>
+            <% salary = 0 %>
+            <% hours = 0 %>
           </tr>
         <% end %>
         </tbody>

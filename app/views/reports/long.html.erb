@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
 <%= form_for 'x', url: "/reports/long", method: "get" do |f| -%>
-  <%= collection_select(:labour, :id, @labours, :id, :first_name, {selected: params[:labour] ? params[:labour][:id] : 1 }) %>
+  <%= collection_select(:labour, :id, @labours, :id, :first_name, {selected: params[:labour] ? params[:labour][:id] : Labours.first }) %>
     <%= date_select("report", "for", discard_day: true, default: Date.today) %>
   <button type="submit" class="btn btn-primary" value="submit">Submit</button>
 <% end -%>

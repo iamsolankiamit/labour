@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-  <%= form_for :salary , url: "/labours/bs" , method: "post" do |f| -%>
+  <%= simple_form_for :salary , url: "/labours/bs" , method: "post" do |f| -%>
 
       <label for="Start"> From: </label>
       <input type="text" name="start" id="datepickerstart">
