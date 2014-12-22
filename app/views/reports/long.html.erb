@@ -33,7 +33,7 @@ unless attendance.nil?
         <% ad += advance.amount_paid unless advance.nil? %>
           <tr>
             <td><%= dat %></td>
-            <% unless Work.includes(:client).find(attendance.work_id).exists? %>
+            <% unless Work.includes(:client).find(attendance.work_id).nil? %>
             <% work_name = Work.includes(:client).find(attendance.work_id).client.first_name %>
             <% end %>
             <td><%= attendance.nil? ? "---" : work_name %></td>
