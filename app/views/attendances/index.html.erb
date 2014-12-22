@@ -26,7 +26,7 @@
   <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>
   <td><%= text_field_tag "", "#{labour.first_name} #{labour.last_name}" %></td>
   <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
-  <% work_id =  labour.work.nil? ? labour.work.id : work_array.first[1]%>
+  <% work_id =  labour.work.nil? ? work_array.first[1] : labour.work.id %>
   <%= work_id %>
   <td><%= select_tag "presence[attendance][#{i}][work_id]", options_for_select(work_array) %></td>
   <%  m = labour.attendances.where(date: @date).last %>
