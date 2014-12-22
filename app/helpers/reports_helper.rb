@@ -1,6 +1,8 @@
 module ReportsHelper
   def to_presenty_symbol(hours)
     case hours
+    when 0
+      return "A"
     when 2
       return "'"
     when 4
