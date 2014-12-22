@@ -12,7 +12,7 @@
         <% @labour.each do |labour| %>
           <tr>
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
-            <td><%= params[:startdate].strftime("%d-%m-%y") %></td>
+            <td><%= Date.new(params[:startdate]).strftime("%d-%m-%y") %></td>
             <% hours = 0 %>
             <% salary = 0 %>
             <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:enddate]).each do |a|
