@@ -48,8 +48,8 @@ unless attendance.nil?
           <td><%= number_with_precision(at/@labour.salary_for_hours , precision: 2) %></td>
           <td></td>
           <td></td>
-          <td><%= sa %></td>
-          <td><%= ad %></td>
+          <td><%= number_with_precision(sa, precision: 2) %></td>
+          <td><%= number_with_precision(ad, precision: 2) %></td>
         </tfoot>
       </table>
     </div>
