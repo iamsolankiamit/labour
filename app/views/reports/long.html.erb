@@ -32,7 +32,7 @@ unless attendance.nil?
         <% advance = Payment.where("date = ? and labour_id = ?", dat, @labour.id).first %>
         <% ad += advance.amount_paid unless advance.nil? %>
           <tr>
-            <td><%= dat %></td>
+            <td><%= dat.strptime("%d-%m-%y") %></td>
             <td><%= attendance.nil? ? "---" : Work.includes(:client).find(attendance.work_id).client.first_name %></td>
             <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
             <td><%= attendance.nil? ? "x" : attendance.in %></td>

@@ -31,7 +31,7 @@
     </div>
     <div class="col-sm-6">
       <h2><%= @labour.first_name %> <%= @labour.last_name %></h2>
-      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.created_at.to_date.strftime("%d-%m-%y") %> to <%= Date.today.strftime("%d-%m-%y") %>.
+      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <%= Date.today.strftime("%d-%m-%y") %>.
       <%if @labour.account > 0 %>
         Balance : <%= @labour.account %>
 
@@ -50,7 +50,7 @@
     </thead>
     <tbody>
     <% if @labour.account_setteled_on.blank? %>
-    <% start_date = @labour.created_at %>
+    <% start_date = @labour.date_of_joining %>
   <% else %>
     <% start_date = @labour.account_setteled_on + 1.day %>
       <% end %>
