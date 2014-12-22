@@ -12,12 +12,11 @@ class ReportsController < ApplicationController
   end
   def client
     @clients = Client.all
+    @labours = Labour.all
     if params[:client]
       @client = Client.find(params[:client][:id])
-      @labours = Labour.includes(:work).where("labour.work.client_id = ?", @client.id).all
     else
       @client = Client.all.first
-      @labours = Labour.includes(:work).where("labour.work.client_id = ?", @client.id).all
     end
   end
 end
