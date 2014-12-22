@@ -37,7 +37,7 @@ unless attendance.nil?
             <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
             <td><%= attendance.nil? ? "x" : attendance.in %></td>
             <td><%= attendance.nil? ? "x" : attendance.out %></td>
-            <td><%= attendance.nil? ? "x" : number_with_precision(attendance.salary, precision : 2) %></td>
+            <td><%= attendance.nil? ? "x" : number_with_precision(attendance.salary, precision: 2) %></td>
             <td><%= advance.nil? ? "x" : number_with_precision(advance.amount_paid, precision: 2 ) %></td>
           </tr>
           <% end %>
