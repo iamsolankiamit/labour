@@ -24,13 +24,18 @@
           <% total_salary = 0.0 %>
           <% sa = 0.0 %>
           <tr>
-            <td><%= labour.full_name %></td>
-            <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
+          <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
             <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
             <%
             unless attendance.nil?
               sa += attendance.salary.to_f
               end %>
+              <% end %>
+              <% if sa > 0.0 %>
+            <td><%= labour.full_name %></td>
+            <% end %>
+            <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
+            <% attendance = Attendance.where("date = ? and labour_id = ? and work_id = ?", dat, labour.id, @client.works.first.id ).first %>
               <td><%= attendance.nil? ? " " : to_presenty_symbol(attendance.hours)  %></td>
               <% end %>
               <td><%= sa %></td>
