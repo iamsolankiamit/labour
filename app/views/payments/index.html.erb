@@ -11,7 +11,7 @@
           </thead>
           <tbody>
 
-<%= simple_form_for 'payment', url: payments_path do %>
+<%= simple_form_for 'payment', url: payments_path do |f| %>
   <% @labours.each_with_index do |labour,i| %>
             <tr>
 
