@@ -2,6 +2,7 @@
   <div class="row">
   <div>Date: <input type="text" id="datepicker"> </div>
     <div class="col-sm-6">
+<%= simple_form_for 'payment', url: payments_path do |f| %>
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <thead>
@@ -10,11 +11,8 @@
             <td>Comment</td>
           </thead>
           <tbody>
-
-<%= simple_form_for 'payment', url: payments_path do |f| %>
   <% @labours.each_with_index do |labour,i| %>
             <tr>
-
     <%= hidden_field_tag "payment[#{i}][date]" , Date.today, class: "date" %>
   <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
               <td><%= link_to "#{labour.first_name} #{labour.last_name}", payment_url(labour.id) %></td>
@@ -25,7 +23,7 @@
           </tbody>
         </table>
       </div>
-      <button class="btn btn-primary btn-large">Okay</button>
+      <%= f.button :submit, value: "Okay", class: "btn btn-primary btn-large" %>
             <% end %>
 
     </div>
