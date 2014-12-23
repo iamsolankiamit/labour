@@ -1,17 +1,28 @@
 <div class="container">
   <div class="row">
-  <%= simple_form_for :salary , url: "/labours/bs" , method: "post" do |f| -%>
-
-      <label for="Start"> From: </label>
-      <input type="text" name="start" id="datepickerstart">
-      <label for="end"> To: </label>
-      <input type="text" name="end" id="datepickerend">
-      <label for="Labour">labour</label>
-      <%= collection_select(:labour, :id, @labours, :id, :name_with_salary) %>
-      <input type="text" name="salary_per_day" >
+  <div class="col-sm-12">
+  <%= simple_form_for :salary , url: "/labours/bs" , :html => { :class => 'form-horizontal' }, method: "post" do |f| -%>
+<div class="form-group">
+      <label for="Start" class="control-label"> From: </label>
+      <input type="text" name="start" class="form-control" id="datepickerstart">
+      </div>
+<div class="form-group">
+      <label for="end" class="control-label"> To: </label>
+      <input type="text" name="end" class="form-control" id="datepickerend">
+      </div>
+<div class="form-group">
+      <label for="Labour" class="control-label">labour</label>
+      <%= collection_select(:labour, :id, @labours, :id, :name_with_salary,{},{class: "form-control"}) %>
+      </div>
+<div class="form-group">
+      <label for="salary_per_day" class="control-label">New Salary</label>
+      <input type="text" name="salary_per_day" class="form-control">
+      </div>
+<div class="form-group">
       <button type="submit" class="btn btn-primary">Okay</button>
+      </div>
   <% end -%>
-
+</div>
   </div>
 </div>
   <script>
