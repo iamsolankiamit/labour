@@ -14,3 +14,7 @@
  *= require jquery-ui
  *= require_self
  */
+
+.form-horizontal .checkbox {
+  margin-left: 50px;
+}
