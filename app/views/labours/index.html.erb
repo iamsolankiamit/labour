@@ -21,7 +21,7 @@
   </thead>
   <tbody>
     <% @labours.each do |labour| %>
-      <tr <%= labour.on_vacation? ? "class='danger'" : "" %>>
+      <tr <%= labour.on_vacation == true ? "class='danger'" : "" %>>
         <td><%= link_to labour.id, labour_path(labour) %></td>
         <td><%= labour.first_name %></td>
         <td><%= labour.last_name %></td>
