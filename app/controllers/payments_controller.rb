@@ -1,13 +1,13 @@
 class PaymentsController < ApplicationController
   def index
-    @labours = Labour.all
+    @labours = Labour.where("labours.on_vacation is not true")
   end
 
   def new
   end
 
   def show
-    @labours = Labour.all
+    @labours = Labour.where("labours.on_vacation is not true")
     @labour = Labour.find(params[:id])
   end
 
