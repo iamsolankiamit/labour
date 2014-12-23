@@ -1,8 +1,9 @@
 <div class="container">
   <div class="row">
-  <div>Date: <input type="text" id="datepicker"> </div>
+    <div>Date: <input type="text" id="datepicker"> </div>
     <div class="col-sm-6">
-      <div class="table-responsive">
+            <%= simple_form_for 'payment', url: payments_path do |f| %>
+    <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <thead>
             <td>Labour</td>
@@ -11,12 +12,11 @@
           </thead>
           <tbody>
 
-<%= simple_form_for 'payment', url: payments_path do |f| %>
-  <% @labours.each_with_index do |labour,i| %>
+            <% @labours.each_with_index do |labour,i| %>
             <tr>
 
-    <%= hidden_field_tag "payment[#{i}][date]" , Date.today, class: "date" %>
-  <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
+              <%= hidden_field_tag "payment[#{i}][date]" , Date.today, class: "date" %>
+              <%= hidden_field_tag "payment[#{i}][labour_id]", labour.id %>
               <td><%= link_to "#{labour.first_name} #{labour.last_name}", payment_url(labour.id) %></td>
               <td><%= text_field_tag "payment[#{i}][amount_paid]" %></td>
               <td><%= text_field_tag "payment[#{i}][comment]" %></td>
@@ -26,99 +26,99 @@
         </table>
       </div>
       <button class="btn btn-primary btn-large">Okay</button>
-            <% end %>
+      <% end %>
 
     </div>
     <div class="col-sm-6">
       <h2><%= @labours.first.first_name %> <%= @labours.first.last_name %></h2>
       Advanced Details: <%= !@labours.first.account_setteled_on.blank? ? (@labours.first.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labours.first.date_of_joining.to_date.strftime("%d-%m-%y") %> to <%= Date.today.strftime("%d-%m-%y") %>.
       <%if @labours.first.account > 0 %>
-        Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
+      Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
 
       <%elsif @labours.first.account < 0 %>
-        Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
-<% else %>
-        No Balance.
-        <% end %>
+      Advance : <%= number_with_precision(@labours.first.account, precision: 2) %>
+      <% else %>
+      No Balance.
+      <% end %>
       <div style="border: 1px solid grey;"> Account Details
-  <table class="table table-borderd table-striped">
-    <thead>
-      <td>Sr no</td>
-      <td>Date</td>
-      <td>Amount</td>
-      <td>Comment</td>
-    </thead>
-    <tbody>
-    <% if @labours.first.account_setteled_on.blank? %>
-    <% start_date = @labours.first.date_of_joining %>
-  <% else %>
-    <% start_date = @labours.first.account_setteled_on + 1.day %>
-      <% end %>
-      <%= start_date %>
-      <% Payment.where("labour_id = ? and date between ? and ?", @labours.first.id,start_date, Date.today).each_with_index do |p,i| %>
-        <tr>
-          <td><%= i %></td>
-          <td><%= p.date.strftime("%d-%m-%y") %></td>
-          <td><%= number_with_precision(p.amount_paid, precision: 2) %></td>
-          <td><%= p.comment %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <table class="table table-borderd table-striped">
+          <thead>
+            <td>Sr no</td>
+            <td>Date</td>
+            <td>Amount</td>
+            <td>Comment</td>
+          </thead>
+          <tbody>
+            <% if @labours.first.account_setteled_on.blank? %>
+            <% start_date = @labours.first.date_of_joining %>
+            <% else %>
+            <% start_date = @labours.first.account_setteled_on + 1.day %>
+            <% end %>
+            <%= start_date %>
+            <% Payment.where("labour_id = ? and date between ? and ?", @labours.first.id,start_date, Date.today).each_with_index do |p,i| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= p.date.strftime("%d-%m-%y") %></td>
+              <td><%= number_with_precision(p.amount_paid, precision: 2) %></td>
+              <td><%= p.comment %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
       <table class="table table-bordered table-striped">
         <tbody>
           <tr>
             <td>Attendance Total</td>
             <td>
-                    <% hours = 0 %>
-      <% salary = 0 %>
-      <% advance = 0 %>
-      <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labours.first.id,start_date, Date.today).each do |a|
-              hours += a.hours unless a.hours.nil?
-              salary += a.salary unless a.salary.nil?
-            end
+              <% hours = 0 %>
+              <% salary = 0 %>
+              <% advance = 0 %>
+              <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labours.first.id,start_date, Date.today).each do |a|
+                hours += a.hours unless a.hours.nil?
+                salary += a.salary unless a.salary.nil?
+              end
               %>
-            <%= number_with_precision(hours/@labours.first.salary_for_hours, precision: 2)  %>
+              <%= number_with_precision(hours/@labours.first.salary_for_hours, precision: 2)  %>
             </td>
           </tr>
           <tr>
             <td>Total Advance</td>
             <td>
-                    <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labours.first.id,start_date, Date.today).each do |p|
-        advance += p.amount_paid unless p.amount_paid.nil?
-      end %>
-      <%= number_with_precision(advance, precision: 2) %>
+              <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labours.first.id,start_date, Date.today).each do |p|
+                advance += p.amount_paid unless p.amount_paid.nil?
+                end %>
+                <%= number_with_precision(advance, precision: 2) %>
 
-            </td>
-          </tr>
-          <tr>
-            <td>Total Salary</td>
-            <td>
-              <%= number_with_precision(salary, precision: 2) %>
-            </td>
-          </tr>
-          <tr>
-            <td>Net Payable</td>
-            <td>
-              <%= number_with_precision(net = salary - advance, precision: 2) %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <%= simple_form_for :labour , method: "patch", url: labour_path(@labours.first) do |f|  -%>
+              </td>
+            </tr>
+            <tr>
+              <td>Total Salary</td>
+              <td>
+                <%= number_with_precision(salary, precision: 2) %>
+              </td>
+            </tr>
+            <tr>
+              <td>Net Payable</td>
+              <td>
+                <%= number_with_precision(net = salary - advance, precision: 2) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <%= simple_form_for :labour , method: "patch", url: labour_path(@labours.first) do |f|  -%>
         <%= f.input :account_setteled_on , input_html: { id: "datepicker2"} %>
         <%= f.hidden_field :account, value:(@labours.first.account + net )%>
         <%= f.button :submit, class: "btn btn-primary", value: "Settle account" %>
-      <% end -%>
+        <% end -%>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  $("#datepicker").on("change", function(){
-    $(".date").each(function(){
-      $(this).val($("#datepicker").val());
+  <script>
+    $("#datepicker").on("change", function(){
+      $(".date").each(function(){
+        $(this).val($("#datepicker").val());
+      });
     });
-  });
-</script>
+  </script>
