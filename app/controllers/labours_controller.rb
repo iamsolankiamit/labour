@@ -4,7 +4,7 @@ class LaboursController < ApplicationController
   # GET /labours
   # GET /labours.json
   def index
-    @labours = Labour.group(:on_vacation).order(:first_name).all
+    @labours = Labour.group('labours'.'on_vacation').order(:first_name).all
   end
 
   # GET /labours/1
