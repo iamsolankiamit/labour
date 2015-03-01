@@ -24,7 +24,7 @@
         <% ad = 0.0 %>
         <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
         <% attendance = Attendance.where("date = ? and labour_id = ?", dat, @labour.id ).first %>
-        <% at += attendance.hours unless attendance.nil? %>
+        <% at += attendance.hours unless attendance.nil? || attendance.hours.nil? %>
         <%
 unless attendance.nil?
         sa += attendance.salary.to_f
