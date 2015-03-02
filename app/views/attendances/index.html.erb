@@ -12,6 +12,7 @@
       <div class="table-responsive">
 <table class="table table-bordered table-striped">
 <thead>
+<td>Sr.</td>
   <td>Labour name</td>
   <td>work Name</td>
   <td>Hours</td>
@@ -21,6 +22,7 @@
 <tbody>
 <%= simple_form_for 'presence', url: attendances_path do |f| %>
   <% @labours.each_with_index do |labour,i| %>
+  <tr><%= i %> . </tr>
   <tr>
     <%= hidden_field_tag "presence[attendance][#{i}][date]" , @date %>
   <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>

@@ -10,7 +10,7 @@ class AttendancesController < ApplicationController
     else
       @date = Date.today
     end
-    @labours = Labour.includes(:attendances).where("labours.on_vacation is not true")
+    @labours = Labour.includes(:attendances).where("labours.on_vacation is not true").order(:first_name)
     @todays_attendance = Attendance.where("date = ? ", Date.today)
 
   end
