@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+  <div class="col-sm-12" style="padding: 20px;">
+  <%= simple_form_for :attendance , url: "/labours/as" , :html => { :class => 'form-horizontal' }, method: "post" do |f| -%>
+<div class="form-group">
+      <label for="Start" class="control-label"> From: </label>
+      <input type="text" name="start" class="form-control" id="datepickerstart">
+      </div>
+<div class="form-group">
+      <label for="end" class="control-label"> To: </label>
+      <input type="text" name="end" class="form-control" id="datepickerend">
+      </div>
+<div class="form-group">
+      <label for="Labour" class="control-label">labour</label>
+      <%= collection_select(:labour, :id, @labours, :id, :full_name,{},{class: "form-control"}) %>
+      </div>
+<div class="form-group">
+      <label for="attendance" class="control-label">Attendance</label>
+      <%= select_tag "presence[attendance][#{}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true, class: "hours form-control" %>
+      </div>
+  <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
+<div class="form-group"><label for="work_id" class= "control-label">Client</label>
+      <%= select_tag "work_id", options_for_select(work_array, work_array.first[1]) , class: "form-control" %>
+
+</div>
+<div class="form-group">
+      <button type="submit" class="btn btn-primary">Okay</button>
+      </div>
+  <% end -%>
+</div>
+  </div>
+</div>
+  <script>
+
+  $(function() {
+    $( "#datepickerstart" ).datepicker({"dateFormat": "dd-mm-yy"});
+    $( "#datepickerend" ).datepicker( {"dateFormat": "dd-mm-yy"});
+  });
+  </script>

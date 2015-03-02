@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :labours do
     get 'salary', on: :collection
+    get 'attendance', on: :collection
     post 'bs', on: :collection
   end
 

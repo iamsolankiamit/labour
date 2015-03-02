@@ -64,7 +64,11 @@ class LaboursController < ApplicationController
   end
 
   def salary
-    @labours = Labour.all
+    @labours = Labour.all.order(:first_name)
+  end
+
+  def attendance
+    @labours = Labour.all.order(:first_name)
   end
 
   def bs

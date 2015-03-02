@@ -10,7 +10,6 @@
       <th><%= model_class.human_attribute_name(:start_date) %></th>
       <th><%= model_class.human_attribute_name(:end_date) %></th>
       <th><%= model_class.human_attribute_name(:client_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -19,10 +18,9 @@
       <tr>
         <td><%= link_to work.id, work_path(work) %></td>
   <td><%= work.name.nil? ? " - " : work.name%></td>
-        <td><%= work.start_date %></td>
-        <td><%= work.end_date %></td>
-        <td><%= work.client_id %></td>
-        <td><%=l work.created_at %></td>
+        <td><%= work.start_date.strftime("%d-%m-%y") %></td>
+        <td><%= work.end_date.strftime("%d-%m-%y") %></td>
+        <td><%= work.client.first_name %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_work_path(work), :class => 'btn btn-default btn-xs' %>
