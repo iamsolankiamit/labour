@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   def index
-    @labours = Labour.where("labours.on_vacation is not true")
+    @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
   end
 
   def new

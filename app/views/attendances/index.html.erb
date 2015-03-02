@@ -23,7 +23,7 @@
 <%= simple_form_for 'presence', url: attendances_path do |f| %>
   <% @labours.each_with_index do |labour,i| %>
   <tr>
-  <td><%= i %> . </td>
+  <td><%= i + 1 %> . </td>
 
     <%= hidden_field_tag "presence[attendance][#{i}][date]" , @date %>
   <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>

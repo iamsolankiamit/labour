@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211154224) do
+ActiveRecord::Schema.define(version: 20150302135532) do
 
   create_table "attendances", force: true do |t|
     t.date     "date"
     t.integer  "labour_id"
     t.integer  "work_id"
     t.integer  "hours"
-    t.time     "in"
-    t.time     "out"
+    t.string   "in"
+    t.string   "out"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "salary"
