@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <div class="col-sm-4"><strong>Date:</strong><form action="/attendances" method="get"><input type="text" id="datepicker" name="date" value="<%= @date.strfTime("%d-%m-%Y") %>"><button value="submit" class="btn btn-primary">Go</button></form></div>
+      <div class="col-sm-4"><strong>Date:</strong><form action="/attendances" method="get"><input type="text" id="datepicker" name="date" value="<%= @date.strftime("%d-%m-%Y") %>"><button value="submit" class="btn btn-primary">Go</button></form></div>
 <div class="btn-group" role="group" aria-label="...">
   <button type="button" class="btn btn-default" id="a">A </button>
   <button type="button" class="btn btn-default" id="p">P</button>
