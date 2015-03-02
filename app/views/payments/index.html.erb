@@ -47,6 +47,7 @@
             <td>Date</td>
             <td>Amount</td>
             <td>Comment</td>
+            <td>Options</td>
           </thead>
           <tbody>
             <% if @labours.first.account_setteled_on.blank? %>
@@ -61,6 +62,7 @@
               <td><%= p.date.strftime("%d-%m-%y") %></td>
               <td><%= number_with_precision(p.amount_paid, precision: 2) %></td>
               <td><%= p.comment %></td>
+              <td> <a href="#" class="btnbtn-danger btn-block"></a></td>
             </tr>
             <% end %>
           </tbody>
