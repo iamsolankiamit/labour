@@ -28,4 +28,10 @@ class PaymentsController < ApplicationController
 
   def update
   end
+
+  def delete
+
+    payment = Payment.find(params[:id])
+    payment.delete
+  end
 end

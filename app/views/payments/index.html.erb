@@ -62,7 +62,11 @@
               <td><%= p.date.strftime("%d-%m-%y") %></td>
               <td><%= number_with_precision(p.amount_paid, precision: 2) %></td>
               <td><%= p.comment %></td>
-              <td> <a href="#" class="btnbtn-danger btn-block">Delete</a></td>
+              <td>  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      payment_path(p),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %></td>
             </tr>
             <% end %>
           </tbody>
