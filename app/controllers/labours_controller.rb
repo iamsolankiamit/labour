@@ -71,6 +71,34 @@ class LaboursController < ApplicationController
     @labours = Labour.all.order(:first_name)
   end
 
+  def as
+    start = params[:start].to_date
+    end_date = params[:end].to_date
+    labour = Labour.find(params[:labour][:id])
+    start.upto(end_date) do |date|
+      a = Attendance.where(labour_id: labour.id, date: date).first
+      unless a.nil?
+        a.labour_id = labour.id
+        a.hours = params[:hours]
+        a.work_id = params[:work_id]
+        salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+        a.salary = salary
+        a.update!(labour_id: labour.id, date: date, salary: salary, work_id: params[:work_id], hours: params[:hours])
+      else
+        a = Attendance.new
+        a.labour_id = labour.id
+        a.date = date
+        a.hours = params[:hours]
+        a.work_id = params[:work_id]
+        salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+        a.salary = salary
+        a.save!
+      end
+
+    end
+    redirect_to :back, notice: "Attendance Updated"
+  end
+
   def bs
     start = params[:start].to_date
     end_date = params[:end].to_date

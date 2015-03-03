@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get 'salary', on: :collection
     get 'attendance', on: :collection
     post 'bs', on: :collection
+    post 'as', on: :collection
   end
 
   get 'home/index'

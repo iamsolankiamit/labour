@@ -16,7 +16,7 @@
       </div>
 <div class="form-group">
       <label for="attendance" class="control-label">Attendance</label>
-      <%= select_tag "presence[attendance][#{}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true, class: "hours form-control" %>
+      <%= select_tag "hours", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true, class: "hours form-control" %>
       </div>
   <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
 <div class="form-group"><label for="work_id" class= "control-label">Client</label>
