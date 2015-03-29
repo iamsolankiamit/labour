@@ -113,12 +113,13 @@
                 </td>
               </tr>
             </tbody>
+          </table>
+
             <%= simple_form_for :labour , method: "patch", url: labour_path(@labour), remote: true do |f|  -%>
           <%= f.hidden_field :account_setteled_on , id: "settle" %>
           <%= f.hidden_field :account, value:(@labour.account + net )%>
           <%= f.button :submit, class: "btn btn-primary", value: "Settle account" %>
           <% end -%>
-          </table>
         </div>
       </div>
     </div>
