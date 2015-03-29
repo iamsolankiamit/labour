@@ -1,6 +1,8 @@
 <div class="container">
   <div class="row">
     <div>Date: <input type="text" id="datepicker"> </div>
+
+            <% end_date = params.has_key?(:upto_date) ? Date.strptime(params[:upto_date],"%d-%m-%Y") : Date.today  %>
     <div class="col-sm-6">
       <%= simple_form_for 'payment', url: payments_path do |f| %>
       <div class="table-responsive">
@@ -31,7 +33,7 @@
       <h2><%= @labour.first_name %> <%= @labour.last_name %></h2>
 
 
-      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <form action="/payments/<%= params[:id] %>" method="get"><input type="text" name="upto_date" id="datepicker3" value="<%= Date.today.strftime("%d-%m-%y") %>"> <button class="btn btn-primary">go</button></form>
+      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <form action="/payments/<%= params[:id] %>" method="get"><input type="text" name="upto_date" id="datepicker3" value="<%= end_date.strftime("%d-%m-%y") %>"> <button class="btn btn-primary">go</button></form>
       <%if @labour.account > 0 %>
       Balance : <%= number_with_precision(@labour.account, precision: 2) %>
 
@@ -51,7 +53,6 @@
           </thead>
           <tbody>
             <% if @labour.account_setteled_on.blank? %>
-            <% end_date = params.has_key?(:upto_date) ? Date.strptime(params[:upto_date],"%d-%m-%Y") : Date.today  %>
             <% start_date = @labour.date_of_joining %>
             <% else %>
             <% start_date = @labour.account_setteled_on + 1.day %>
