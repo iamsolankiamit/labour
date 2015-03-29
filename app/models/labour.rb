@@ -2,7 +2,7 @@ class Labour < ActiveRecord::Base
   has_many :attendances
   belongs_to :work
 
-  validates_uniqueness_of :full_name
+  # validates_uniqueness_of :full_name
 
   def name_with_salary
     "#{self.first_name} #{self.last_name} - #{self.salary_per_day}"
