@@ -34,6 +34,11 @@
 
 
       Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <form action="/payments/<%= params[:id] %>" method="get"><input type="text" name="upto_date" id="datepicker3" value="<%= end_date.strftime("%d-%m-%y") %>"> <button class="btn btn-primary">go</button></form>
+          <%= simple_form_for :labour , method: "patch", url: labour_path(@labour), remote: true do |f|  -%>
+          <%= f.hidden_field :account_setteled_on , id: "settele" %>
+          <%= f.hidden_field :account, value:(@labour.account + net )%>
+          <%= f.button :submit, class: "btn btn-primary", value: "Settle account" %>
+          <% end -%>
       <%if @labour.account > 0 %>
       Balance : <%= number_with_precision(@labour.account, precision: 2) %>
 
@@ -113,11 +118,6 @@
               </tr>
             </tbody>
           </table>
-          <%= simple_form_for :labour , method: "patch", url: labour_path(@labour), remote: true do |f|  -%>
-          <%= f.input :account_setteled_on , input_html: { id: "datepicker2"} %>
-          <%= f.hidden_field :account, value:(@labour.account + net )%>
-          <%= f.button :submit, class: "btn btn-primary", value: "Settle account" %>
-          <% end -%>
         </div>
       </div>
     </div>
@@ -126,5 +126,8 @@
         $(".date").each(function(){
           $(this).val($("#datepicker").val());
         });
+      });
+      $("#datepicker3").on("change", function(){
+          $("#settle").val($("#datepicker3").val());
       });
     </script>
