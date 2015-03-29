@@ -9,6 +9,8 @@
   <%= error_span(@client[:mobile_no]) %>
   <%= f.input :email %>
   <%= error_span(@client[:email]) %>
+  <%= f.input :on_vacation %>
+  <%= error_span(@client[:on_vacation]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
