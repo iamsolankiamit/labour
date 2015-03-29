@@ -63,11 +63,11 @@ class LaboursController < ApplicationController
   end
 
   def salary
-    @labours = Labour.all.order(:first_name)
+    @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
   end
 
   def attendance
-    @labours = Labour.all.order(:first_name)
+    @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
   end
 
   def as
