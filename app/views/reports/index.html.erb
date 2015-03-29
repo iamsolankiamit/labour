@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
-    <form action="/reports" method="get"><input type="text" id="datepicker" value="<%= params[:startdate] %>"><button class="btn btn-primary">Go</button></form>
+    <form action="/reports/index" method="get"><input type="text" id="datepicker" value="<%= params[:startdate] %>"><button class="btn btn-primary">Go</button></form>
   </div>
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
@@ -18,7 +18,7 @@
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
             <% hours = 0 %>
             <% salary = 0 %>
-            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:startdate].to_date + 30.days).each do |a|
+            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],Date.strftime(params[:startdate], "%d/%m/%Y") + 1.month).each do |a|
               hours += a.hours unless a.hours.nil?
               salary += a.salary unless a.salary.nil?
             end
