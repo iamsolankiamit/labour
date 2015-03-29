@@ -27,7 +27,6 @@ class LaboursController < ApplicationController
   # POST /labours.json
   def create
     @labour = Labour.new(labour_params)
-
     respond_to do |format|
       if @labour.save
         format.html { redirect_to @labour, notice: 'Labour was successfully created.' }
