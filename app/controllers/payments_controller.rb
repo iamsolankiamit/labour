@@ -30,7 +30,6 @@ class PaymentsController < ApplicationController
   end
 
   def delete
-
     payment = Payment.find(params[:id])
     payment.delete
   end

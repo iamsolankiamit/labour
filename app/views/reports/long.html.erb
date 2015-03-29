@@ -33,12 +33,12 @@ unless attendance.nil?
         <% ad += advance.amount_paid unless advance.nil? %>
           <tr>
             <td><%= dat.strftime("%d-%m-%y") %></td>
-            <td><%= attendance.nil? ? "---" : Work.includes(:client).find(attendance.work_id).client.first_name %></td>
-            <td><%= attendance.nil? ? "x" : to_presenty_symbol(attendance.hours)  %></td>
-            <td><%= attendance.nil? ? "x" : attendance.in %></td>
-            <td><%= attendance.nil? ? "x" : attendance.out %></td>
-            <td><%= attendance.nil? ? "x" : number_with_precision(attendance.salary, precision: 2) %></td>
-            <td><%= advance.nil? ? "x" : number_with_precision(advance.amount_paid, precision: 2 ) %></td>
+            <td><%= attendance.nil? ? "-" : Work.includes(:client).find(attendance.work_id).client.first_name %></td>
+            <td><%= attendance.nil? ? "-" : to_presenty_symbol(attendance.hours)  %></td>
+            <td><%= attendance.nil? ? "-" : attendance.in %></td>
+            <td><%= attendance.nil? ? "-" : attendance.out %></td>
+            <td><%= attendance.nil? ? "-" : number_with_precision(attendance.salary, precision: 2) %></td>
+            <td><%= advance.nil? ? "-" : number_with_precision(advance.amount_paid, precision: 2 ) %></td>
           </tr>
           <% end %>
         </tbody>
