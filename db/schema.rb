@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302135532) do
+ActiveRecord::Schema.define(version: 20150329181123) do
 
   create_table "attendances", force: true do |t|
     t.date     "date"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20150302135532) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "on_vacation", default: false
   end
 
   create_table "labours", force: true do |t|
