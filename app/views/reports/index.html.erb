@@ -18,7 +18,7 @@
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
             <% hours = 0 %>
             <% salary = 0 %>
-            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:startdate] + 1.month).each do |a|
+            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:startdate] + 30.days).each do |a|
               hours += a.hours unless a.hours.nil?
               salary += a.salary unless a.salary.nil?
             end
