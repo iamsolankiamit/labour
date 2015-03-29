@@ -29,8 +29,8 @@ class PaymentsController < ApplicationController
   def update
   end
 
-  def delete
-    payment = Payment.find(params[:id])
-    payment.delete
+  def destroy
+    @payment.destroy
+    redirect_to payments_url , notice: "Payment has been deleted"
   end
 end
