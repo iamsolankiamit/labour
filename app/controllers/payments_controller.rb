@@ -1,4 +1,5 @@
 class PaymentsController < ApplicationController
+  before_action :set_payment, only: :destroy
   def index
     @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
   end
@@ -33,4 +34,11 @@ class PaymentsController < ApplicationController
     @payment.destroy
     redirect_to payments_url , notice: "Payment has been deleted"
   end
+
+    private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_payment
+      @payment = Payment.find(params[:id])
+    end
+
 end
