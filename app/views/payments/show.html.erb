@@ -31,7 +31,7 @@
       <h2><%= @labour.first_name %> <%= @labour.last_name %></h2>
 
 
-      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <input type="text" id="datepicker2" value="<%= Date.today.strftime("%d-%m-%y") %>"> .
+      Advanced Details: <%= !@labour.account_setteled_on.blank? ? (@labour.account_setteled_on + 1.day).strftime("%d-%m-%y") : @labour.date_of_joining.to_date.strftime("%d-%m-%y") %> to <form action="/payments/<%= params[:id] %>" method="get"><input type="text" name="upto_date" id="datepicker2" value="<%= Date.today.strftime("%d-%m-%y") %>"> <button class="btn btn-primary">go</button></form>
       <%if @labour.account > 0 %>
       Balance : <%= number_with_precision(@labour.account, precision: 2) %>
 
@@ -51,11 +51,12 @@
           </thead>
           <tbody>
             <% if @labour.account_setteled_on.blank? %>
+            <% end_date = params[:upto_date].exists? ? params[:upto_date] : Date.today  %>
             <% start_date = @labour.date_of_joining %>
             <% else %>
             <% start_date = @labour.account_setteled_on + 1.day %>
             <% end %>
-            <% Payment.where("labour_id = ? and date between ? and ?", @labour.id,start_date, Date.today).each_with_index do |p,i| %>
+            <% Payment.where("labour_id = ? and date between ? and ?", @labour.id,start_date, end_date ).each_with_index do |p,i| %>
             <tr>
               <td><%= i %></td>
               <td><%= p.date.strftime("%d-%m-%y") %></td>
@@ -79,7 +80,7 @@
                 <% hours = 0 %>
                 <% salary = 0 %>
                 <% advance = 0 %>
-                <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, Date.today).each do |a|
+                <% Attendance.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, end_date).each do |a|
                   hours += a.hours unless a.hours.nil?
                   salary += a.salary unless a.salary.nil?
                 end
@@ -90,7 +91,7 @@
             <tr>
               <td>Total Advance</td>
               <td>
-                <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, Date.today).each do |p|
+                <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, end_date).each do |p|
                   advance += p.amount_paid unless p.amount_paid.nil?
                   end %>
                   <%= number_with_precision(advance, precision: 2) %>
