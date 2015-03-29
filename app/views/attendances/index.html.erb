@@ -28,7 +28,7 @@
     <%= hidden_field_tag "presence[attendance][#{i}][date]" , @date %>
   <%= hidden_field_tag "presence[attendance][#{i}][labour_id]", labour.id %>
   <td><%= text_field_tag "", "#{labour.first_name} #{labour.last_name}" %></td>
-  <% work_array = Work.includes(:client).all.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
+  <% work_array = Work.includes(:client).where("client.on_vacation != false").map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
   <% work_id =  labour.work.nil? ? work_array.first[1] : labour.work.id %>
   <% unless labour.attendances.where(date: @date).last.nil? %>
   <% unless labour.attendances.where(date: @date).last.nil? %>
