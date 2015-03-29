@@ -51,7 +51,7 @@
           </thead>
           <tbody>
             <% if @labour.account_setteled_on.blank? %>
-            <% end_date = params.has_key?(:upto_date) ? params[:upto_date] : Date.today  %>
+            <% end_date = params.has_key?(:upto_date) ? Date.strptime(params[:upto_date],"%d-%m-%Y") : Date.today  %>
             <% start_date = @labour.date_of_joining %>
             <% else %>
             <% start_date = @labour.account_setteled_on + 1.day %>
