@@ -4,15 +4,15 @@
       <table class="table-bordered table-striped table">
         <thead>
           <td>Name</td>
-          <td>Month</td>
           <td>Presenty</td>
           <td>Salary</td>
+          <td>Advance</td>
+          <td>Balance</td>
         </thead>
         <tbody>
         <% @labour.each do |labour| %>
           <tr>
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
-            <td><%= params[:startdate] %></td>
             <% hours = 0 %>
             <% salary = 0 %>
             <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],params[:enddate]).each do |a|
@@ -22,6 +22,8 @@
               %>
             <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
             <td><%= number_with_precision(salary, :precision => 2) %></td>
+            <td><%= number_with_precision(labour.account, :precision => 2) %></td>
+            <td><%= number_with_precision(salary - labour.account, :precision => 2) %></td>
             <% salary = 0 %>
             <% hours = 0 %>
           </tr>
