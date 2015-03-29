@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    @labours = Labour.where("labours.on_vacation is not true")
+    @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
     @labour = Labour.find(params[:id])
   end
 
