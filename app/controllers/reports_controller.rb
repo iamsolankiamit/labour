@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
   end
   def client
     @clients = Client.where("clients.on_vacation is not true").order(:first_name)
-    @labours = Labour.where("labours.on_vacation is not true").order(:first_name)
+    @labours = Labour.all.order(:first_name)
     if params[:client]
       @client = Client.find(params[:client][:id])
     else
