@@ -21,10 +21,12 @@
         <% d ||= Date.today %>
         <% at = 0.0 %>
         <% sa = 0.0 %>
+        <% sac = 0.0 %>
         <% ad = 0.0 %>
         <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
         <% attendance = Attendance.where("date = ? and labour_id = ?", dat, @labour.id ).first %>
-        <% at += attendance.hours unless attendance.nil? || attendance.hours.nil? %>
+        <% at += attendance.hours unless attendance.nil? || attendance.hours.nil?
+        %>
         <%
 unless attendance.nil?
         sa += attendance.salary.to_f
@@ -37,7 +39,11 @@ unless attendance.nil?
             <td><%= attendance.nil? ? "-" : to_presenty_symbol(attendance.hours)  %></td>
             <td><%= attendance.nil? ? "-" : attendance.in %></td>
             <td><%= attendance.nil? ? "-" : attendance.out %></td>
+            <% if cookies[:s] == 'c' %>
+            <td><%= attendance.nil? ? "-" : number_with_precision(attendance.client_salary, precision: 2) %></td>
+            <% else %>
             <td><%= attendance.nil? ? "-" : number_with_precision(attendance.salary, precision: 2) %></td>
+            <% end %>
             <td><%= advance.nil? ? "-" : number_with_precision(advance.amount_paid, precision: 2 ) %></td>
           </tr>
           <% end %>
