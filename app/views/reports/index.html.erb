@@ -34,7 +34,7 @@
             <% elsif cookies[:s] == 'c' %>
             <td><%= number_with_precision(client_salary, :precision => 2) %></td>
             <% end %>
-             <% Payment.where("labour_id = ? and date >= ? and date <= ?", @labour.id,start_date, end_date).each do |p|
+             <% Payment.where("labour_id = ? and date >= ? and date <= ?", labour.id,start_date, end_date).each do |p|
                   advance += p.amount_paid unless p.amount_paid.nil?
                   end %>
             <td><%= number_with_precision(advance, precision: 2) %></td>
@@ -45,6 +45,7 @@
             <td><%= number_with_precision(client_salary - labour.account, :precision => 2) %></td>
             <% end %>
             <% salary = 0 %>
+            <% advance = 0 %>
             <% client_salary = 0 %>
             <% hours = 0 %>
           </tr>
