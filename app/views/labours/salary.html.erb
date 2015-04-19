@@ -14,11 +14,11 @@
       <label for="Labour" class="control-label">labour</label>
       <%= collection_select(:labour, :id, @labours, :id, :name_with_salary,{},{class: "form-control"}) %>
       </div>
+<% if cookies[:s] == 'c' %>
       <%= f.input :client_salary %>
-<div class="form-group">
-      <label for="salary_per_day" class="control-label">New Salary</label>
-      <input type="text" name="salary_per_day" class="form-control">
-      </div>
+<% else %>
+      <%= f.input :salary_per_day %>
+      <% end %>
 <div class="form-group">
       <button type="submit" class="btn btn-primary">Okay</button>
       </div>

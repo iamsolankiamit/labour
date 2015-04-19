@@ -81,8 +81,10 @@ class LaboursController < ApplicationController
         a.hours = params[:hours]
         a.work_id = params[:work_id]
         salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+        client_salary = (labour.client_salary / labour.salary_for_hours)*a.hours
         a.salary = salary
-        a.update!(labour_id: labour.id, date: date, salary: salary, work_id: params[:work_id], hours: params[:hours])
+        a.client_salary = client_salary
+        a.update!(labour_id: labour.id, date: date, salary: salary, client_salary: client_salary, work_id: params[:work_id], hours: params[:hours])
       else
         a = Attendance.new
         a.labour_id = labour.id
@@ -90,7 +92,9 @@ class LaboursController < ApplicationController
         a.hours = params[:hours]
         a.work_id = params[:work_id]
         salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+        client_salary = (labour.client_salary / labour.salary_for_hours)*a.hours
         a.salary = salary
+        a.client_salary = client_salary
         a.save!
       end
 
@@ -102,15 +106,28 @@ class LaboursController < ApplicationController
     start = params[:start].to_date
     end_date = params[:end].to_date
     labour = Labour.find(params[:labour][:id])
-    labour.salary_per_day = params[:salary_per_day]
-    labour.save!
-    start.upto(end_date) do |date|
-      a = Attendance.where(labour_id: labour.id, date: date).first
-      unless a.nil?
-      salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
-      a.salary = salary
-      a.update!(labour_id: labour.id, date: date, salary: salary)
-    end
+    if cookies[:s] == 'c'
+      labour.client_salary = params[:client_salary]
+      labour.save!
+      start.upto(end_date) do |date|
+        a = Attendance.where(labour_id: labour.id, date: date).first
+        unless a.nil?
+          salary = (labour.client_salary / labour.salary_for_hours)*a.hours
+          a.client_salary = salary
+          a.update!(labour_id: labour.id, date: date, client_salary: salary)
+        end
+      end
+    else
+      labour.salary_per_day = params[:salary_per_day]
+      labour.save!
+      start.upto(end_date) do |date|
+        a = Attendance.where(labour_id: labour.id, date: date).first
+        unless a.nil?
+          salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
+          a.salary = salary
+          a.update!(labour_id: labour.id, date: date, salary: salary)
+        end
+      end
     end
     redirect_to :back
   end
