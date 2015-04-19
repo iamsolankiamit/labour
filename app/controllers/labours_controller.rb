@@ -81,7 +81,8 @@ class LaboursController < ApplicationController
         a.hours = params[:hours]
         a.work_id = params[:work_id]
         salary = (labour.salary_per_day / labour.salary_for_hours)*a.hours
-        client_salary = (labour.client_salary / labour.salary_for_hours)*a.hours
+        client_salary = 0.0
+        client_salary = (labour.client_salary / labour.salary_for_hours)*a.hours unless labour.client_salary.nil?
         a.salary = salary
         a.client_salary = client_salary
         a.update!(labour_id: labour.id, date: date, salary: salary, client_salary: client_salary, work_id: params[:work_id], hours: params[:hours])
