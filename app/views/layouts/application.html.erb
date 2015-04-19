@@ -26,6 +26,15 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+        <% if cookies[:s] == 'c' %>
+          <p class="navbar-text text-success">Company</p>
+          <% else %>
+          <p class="navbar-text text-success">Personal</p>
+          <% end %>
+        </li>
+      </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Labours<b class="caret"></b></a>
