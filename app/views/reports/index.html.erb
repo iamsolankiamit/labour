@@ -5,6 +5,8 @@
   </div>
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
+              <%= params[:startdate].beginning_to_month %>
+              <%= params[:startdate].end_of_month %>
         <thead>
           <td>Name</td>
           <td>Presenty</td>
@@ -14,7 +16,7 @@
         </thead>
         <tbody>
         <% @labour.each do |labour| %>
-        <tr>
+          <tr>
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
             <% hours = 0 %>
             <% salary = 0 %>
@@ -25,8 +27,6 @@
               client_salary += a.client_salary unless a.client_salary.nil?
             end
               %>
-              <%= params[:startdate].beginning_to_month %>
-              <%= params[:startdate].end_of_month %>
             <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
             <% if cookies[:s] == 'p' %>
             <td><%= number_with_precision(salary, :precision => 2) %></td>
