@@ -107,7 +107,7 @@ class LaboursController < ApplicationController
     end_date = params[:end].to_date
     labour = Labour.find(params[:labour][:id])
     if cookies[:s] == 'c'
-      labour.client_salary = params[:client_salary]
+      labour.client_salary = params[:salary][:client_salary]
       labour.save!
       start.upto(end_date) do |date|
         a = Attendance.where(labour_id: labour.id, date: date).first
@@ -118,7 +118,7 @@ class LaboursController < ApplicationController
         end
       end
     else
-      labour.salary_per_day = params[:salary_per_day]
+      labour.salary_per_day = params[:salary][:salary_per_day]
       labour.save!
       start.upto(end_date) do |date|
         a = Attendance.where(labour_id: labour.id, date: date).first
