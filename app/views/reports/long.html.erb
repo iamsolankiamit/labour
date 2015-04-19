@@ -30,6 +30,7 @@
         <%
 unless attendance.nil?
         sa += attendance.salary.to_f
+        sac += attendance.client_salary.to_f
         end %>
         <% advance = Payment.where("date = ? and labour_id = ?", dat, @labour.id).first %>
         <% ad += advance.amount_paid unless advance.nil? %>
@@ -54,7 +55,11 @@ unless attendance.nil?
           <td><%= number_with_precision(at/@labour.salary_for_hours , precision: 2) %></td>
           <td></td>
           <td></td>
-          <td><%= number_with_precision(sa, precision: 2) %></td>
+          <% if cookies[:s] == 'c' %>
+            <td><%= number_with_precision(sac, precision: 2) %></td>
+          <% else %>
+            <td><%= number_with_precision(sa, precision: 2) %></td>
+          <% end %>
           <td><%= number_with_precision(ad, precision: 2) %></td>
         </tfoot>
       </table>
