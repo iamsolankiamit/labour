@@ -122,6 +122,6 @@ class LaboursController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def labour_params
-      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining,:account, :salary_per_day, :salary_for_hours, :on_vacation, :has_left, :work_id,:account_setteled_on)
+      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining,:account, :salary_per_day, :salary_for_hours, :on_vacation, :has_left, :work_id,:account_setteled_on,:client_salary)
     end
   end
