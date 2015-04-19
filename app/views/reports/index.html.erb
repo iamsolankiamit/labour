@@ -5,8 +5,8 @@
   </div>
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
-              <%= Date.parse(params[:startdate]).beginning_of_month %>
-              <%= Date.parse(params[:startdate]).end_of_month %>
+              <% start_date = Date.parse(params[:startdate]).beginning_of_month %>
+              <% end_date = Date.parse(params[:startdate]).end_of_month %>
         <thead>
           <td>Name</td>
           <td>Presenty</td>
@@ -21,7 +21,7 @@
             <% hours = 0 %>
             <% salary = 0 %>
             <% client_salary = 0 %>
-            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],DateTime.parse(params[:startdate]) + 1.month).each do |a|
+            <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, start_date,end_date).each do |a|
               hours += a.hours unless a.hours.nil?
               salary += a.salary unless a.salary.nil?
               client_salary += a.client_salary unless a.client_salary.nil?
