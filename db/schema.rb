@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329181123) do
+ActiveRecord::Schema.define(version: 20150416090942) do
 
   create_table "attendances", force: true do |t|
     t.date     "date"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150329181123) do
     t.date     "account_setteled_on"
     t.integer  "work_id"
     t.float    "account",             default: 0.0
+    t.integer  "client_salary"
   end
 
   create_table "payments", force: true do |t|

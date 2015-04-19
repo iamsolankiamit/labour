@@ -18,16 +18,28 @@
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
             <% hours = 0 %>
             <% salary = 0 %>
+            <% client_salary = 0 %>
             <td><% Attendance.where("labour_id = ? and date between ? and ? ", labour.id, params[:startdate],DateTime.parse(params[:startdate]) + 1.month).each do |a|
               hours += a.hours unless a.hours.nil?
               salary += a.salary unless a.salary.nil?
+              client_salary += a.client_salary unless a.client_salary.nil?
             end
               %>
             <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
+            <% if cookies[:s] == 'p' %>
             <td><%= number_with_precision(salary, :precision => 2) %></td>
+            <% elsif cookies[:s] == 'c' %>
+            <td><%= number_with_precision(client_salary, :precision => 2) %></td>
+            <% end %>
             <td><%= number_with_precision(labour.account, :precision => 2) %></td>
+            <% if cookies[:s] == 'p' %>
+
             <td><%= number_with_precision(salary - labour.account, :precision => 2) %></td>
+            <% elsif cookies[:s] == 'c' %>
+            <td><%= number_with_precision(client_salary - labour.account, :precision => 2) %></td>
+            <% end %>
             <% salary = 0 %>
+            <% client_salary = 0 %>
             <% hours = 0 %>
           </tr>
         <% end %>
