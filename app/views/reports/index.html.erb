@@ -25,6 +25,7 @@
               client_salary += a.client_salary unless a.client_salary.nil?
             end
               %>
+              <%= DateTime.parse(params[:startdate]) + 1.month) %>
             <%= number_with_precision(hours/labour.salary_for_hours, :precision => 2)  %></td>
             <% if cookies[:s] == 'p' %>
             <td><%= number_with_precision(salary, :precision => 2) %></td>
