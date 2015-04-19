@@ -15,6 +15,10 @@
           <td>Balance</td>
         </thead>
         <tbody>
+        <% ts = 0 %>
+        <% ta = 0 %>
+        <% tb = 0 %>
+        <% tas = 0 %>
         <% @labour.each do |labour| %>
           <tr>
             <td><%= labour.first_name %> <%= labour.last_name %> </td>
@@ -40,16 +44,26 @@
             <td><%= number_with_precision(advance, precision: 2) %></td>
             <% if cookies[:s] == 'p' %>
 
-            <td><%= number_with_precision(salary - labour.account, :precision => 2) %></td>
+            <td><%= number_with_precision(salary - advance, :precision => 2) %></td>
             <% elsif cookies[:s] == 'c' %>
-            <td><%= number_with_precision(client_salary - labour.account, :precision => 2) %></td>
+            <td><%= number_with_precision(client_salary - advance, :precision => 2) %></td>
             <% end %>
+            <% ts += salary %>
+            <% tas += client_salary %>
+            <% ta += advance %>
+            <% tb += (salary - advance) %>
             <% salary = 0 %>
             <% advance = 0 %>
             <% client_salary = 0 %>
             <% hours = 0 %>
           </tr>
         <% end %>
+        <tr>
+        <td></td>
+        <td></td>
+        <td class="strong"><%= ts %></td>
+        <td class="strong"><%= ta %></td>
+        <td class="strong"><%= tb %></td></tr>
         </tbody>
       </table>
     </div>
