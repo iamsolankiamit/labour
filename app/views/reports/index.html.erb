@@ -5,7 +5,7 @@
   </div>
     <div class="table-responsive">
       <table class="table-bordered table-striped table">
-              <%= Date.parse(params[:startdate]).beginning_to_month %>
+              <%= Date.parse(params[:startdate]).beginning_of_month %>
               <%= Date.parse(params[:startdate]).end_of_month %>
         <thead>
           <td>Name</td>
