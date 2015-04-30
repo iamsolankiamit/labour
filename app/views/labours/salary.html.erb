@@ -10,13 +10,19 @@
       <label for="end" class="control-label"> To: </label>
       <input type="text" name="end" class="form-control" id="datepickerend">
       </div>
+<% if cookies[:s] == 'c' %>
+
+<div class="form-group">
+      <label for="Labour" class="control-label">labour</label>
+      <%= collection_select(:labour, :id, @labours, :id, :name_with_client_salary,{},{class: "form-control"}) %>
+      </div>
+      <%= f.input :client_salary %>
+<% else %>
+
 <div class="form-group">
       <label for="Labour" class="control-label">labour</label>
       <%= collection_select(:labour, :id, @labours, :id, :name_with_salary,{},{class: "form-control"}) %>
       </div>
-<% if cookies[:s] == 'c' %>
-      <%= f.input :client_salary %>
-<% else %>
       <%= f.input :salary_per_day %>
       <% end %>
 <div class="form-group">
