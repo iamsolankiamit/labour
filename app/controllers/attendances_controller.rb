@@ -106,6 +106,6 @@ Attendance.where(date: x["date"], labour_id: x["labour_id"]).first_or_initialize
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_params
-      params.require(:attendance).permit(:date, :labour_id, :work_id, :hours, :in, :out)
+      params.require(:attendance).permit(:date, :labour_id, :work_id, :hours, :in, :out,:client_salary)
     end
   end
