@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'reports/index'
   get 'reports/long'
   get 'reports/client'
