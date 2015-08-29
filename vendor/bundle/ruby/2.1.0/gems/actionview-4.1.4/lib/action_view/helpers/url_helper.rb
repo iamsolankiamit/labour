@@ -417,7 +417,6 @@ module ActionView
       #      end
       #   %>
       #   # If the user isn't logged in...
-      #   # => <a href="/sessions/new/">Login</a>
       #   # If they are logged in...
       #   # => <a href="/accounts/show/3">my_username</a>
       def link_to_if(condition, name, options = {}, html_options = {}, &block)
