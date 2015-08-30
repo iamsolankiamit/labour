@@ -38,13 +38,36 @@
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
 
-                      
+
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
       </div>
+
+      <%= simple_form_for 'presence', url: labours_path do |f| %>
+  <% @labours.each_with_index do |labour,i| %>
+  <tr>
+  <td><%= i + 1 %> . </td>
+ hi
+    <%= hidden_field_tag "presence[labour][#{i}][date]" , @date %>
+  <%= hidden_field_tag "presence[labour][#{i}][labour_id]", labour.id %>
+  <td><%= text_field_tag "", "#{labour.first_name} #{labour.last_name}" %></td>
+  <% work_array = Work.joins(:client).where("clients.on_vacation is not true").map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
+  <% work_id =  labour.work.nil? ? work_array.first[1] : labour.work.id %>
+  <% unless labour.attendances.where(date: @date).last.nil? %>
+  <% unless labour.attendances.where(date: @date).last.nil? %>
+  <% work_id = labour.attendances.where(date: @date).last.work_id %>
+  <% end %>
+  <% end %>
+  <td><%= select_tag "presence[labour][#{i}][work_id]", options_for_select(work_array, "#{work_id}")  %></td>
+  <%  m = labour.attendances.where(date: @date).last %>
+  <% m.nil? ? 0 : h = m.hours  %>
+  <td><%= select_tag "presence[labour][#{i}][hours]", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}, h ), include_blank: true, class: "hours" %></td>
+  <td><%= text_field_tag "presence[labour][#{i}][in]" %></td>
+  <td><%= text_field_tag "presence[labour][#{i}][out]" %></td>
+  </tr>
 
 <hr>
 <%= link_to t('.new', :default => t("helpers.links.new")),

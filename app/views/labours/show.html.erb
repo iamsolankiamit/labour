@@ -26,14 +26,6 @@
   <% end %>
 </dl>
 
-<% work_array = Work.joins(:client).where("clients.on_vacation is not true").map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
-  <% work_id =  labour.work.nil? ? work_array.first[1] : labour.work.id %>
-  <% unless labour.attendances.where(date: @date).last.nil? %>
-  <% unless labour.attendances.where(date: @date).last.nil? %>
-  <% work_id = labour.attendances.where(date: @date).last.work_id %>
-  <% end %>
-  <% end %>
-  
 <%= link_to t('.back', :default => t("helpers.links.back")),
               labours_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
