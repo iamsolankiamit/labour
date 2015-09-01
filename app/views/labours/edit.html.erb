@@ -9,13 +9,3 @@
 </div>
   </div>
 </div>
-<%= simple_form_for 'presence', url: labours/edit_path do |f| %>
-  <% @labours.each_with_index do |labour,i| %>
-  <tr>
-  <td><%= i + 1 %> . </td>
-
-
-<%work_array = Work.joins(:client).where("client.on_vacation is not true").map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id ] }%>
-<% work_id = labour.work.nil ? work_array.first[1] : labour.work.id%>
-
-<td><%= select_tag "presence[attendance][#{i}][work_id]", options_for_select(work_array, "#{work_id}")  %></td>
