@@ -26,8 +26,6 @@ class LaboursController < ApplicationController
   # POST /labours
   # POST /labours.json
   def create
-    params[:presence][:labour].each do |labour|
-      x = labour[1]
     @labour = Labour.new(labour_params)
     respond_to do |format|
       if @labour.save
