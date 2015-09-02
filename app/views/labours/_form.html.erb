@@ -17,9 +17,8 @@
   <%= error_span(@labour[:on_vacation]) %>
   <%= f.input :has_left %>
   <%= error_span(@labour[:has_left]) %>
-  <%= f.input :work_id %>
- <%= error_span(@attendance[:work_id])%>
-
+  <% work_array = Work.client_not_on_vacation.map { |work| ["#{work.client.first_name} #{work.client.last_name}",work.id] } %>
+  <%= f.input :work_id, collection: work_array, value_method: :id, label_method: :name_with_client_name %>
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 labours_path, :class => 'btn btn-default' %>
