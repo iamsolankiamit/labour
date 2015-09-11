@@ -1,0 +1,33 @@
+<header>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to root_path, class: "navbar-brand logo-header" do %>
+<% end %>
+      <div class="collapse navbar-collapse" id="navbar-menu">
+      <ul class="nav navbar-nav navbar-right">
+
+      <li><a data-toggle="modal" style="cursor: pointer;" data-target="#property_alert">Property Alerts</a></li>
+      <li><a href="/localities">Localities</a></li>
+      <li><a href="/projects">New Projects</a></li>
+      <% unless user_signed_in? %>
+        <li><a href="/users/sign_in">Login</a></li>
+        <li><a href="/users/sign_up">Signup</a></li>
+        <% else %>
+        <li><p class="navbar-text" style="font-weight:600;">Welcome,  <%= current_user.first_name.titlecase %></p></li>
+        <li><%= link_to('Logout', destroy_user_session_path, :method => :delete)  %></li>
+        <% end %>
+     <li><a class="btn btn-primary btn-block btn-primary-pf" style="color: white !important; margin-top:8px; padding:8px;" href="/rents/new">List Your Property</a></li>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</header>

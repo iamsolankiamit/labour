@@ -49,7 +49,7 @@
             <% d.at_beginning_of_month.upto(d.at_end_of_month) do |dat|%>
             <td></td>
             <% end %>
-            <td><%= number_with_precision(total_salary, precision: 2) %></td>
+            <td class="strong"><strong><%= number_with_precision(total_salary, precision: 2) %></strong></td>
           </tfoot>
         </table>
       </div>
