@@ -58,9 +58,9 @@ unless attendance.nil?
           <% if cookies[:s] == 'c' %>
             <td class="strong"><strong><%= number_with_precision(sac, precision: 2) %></strong></td>
           <% else %>
-            <td class="strong"><%= number_with_precision(sa, precision: 2) %></strong></td>
+            <td class="strong"><strong><%= number_with_precision(sa, precision: 2) %></strong></td>
           <% end %>
-          <td class="strong"><%= number_with_precision(ad, precision: 2) %></strong></td>
+          <td class="strong"><strong><%= number_with_precision(ad, precision: 2) %></strong></td>
         </tfoot>
       </table>
     </div>
