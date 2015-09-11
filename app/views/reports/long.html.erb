@@ -52,7 +52,7 @@ unless attendance.nil?
         <tfoot>
           <td></td>
           <td></td>
-          <td><%= number_with_precision(at/@labour.salary_for_hours , precision: 2) %></td>
+          <td class="strong"><strong><%= number_with_precision(at/@labour.salary_for_hours , precision: 2) %><strong></td>
           <td></td>
           <td></td>
           <% if cookies[:s] == 'c' %>
