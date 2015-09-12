@@ -29,9 +29,9 @@
       <ul class="nav navbar-nav navbar-left">
         <li>
         <% if cookies[:s] == 'c' %>
-          <p class="navbar-text text-success" style="padding-bottom: 0px; padding-top: 0px;">Company</p>
+          <p class="navbar-text text-success">Company</p>
           <% else %>
-          <p class="navbar-text text-success" style="padding-bottom: 0px; padding-top: 0px;">Personal</p>
+          <p class="navbar-text text-success">Personal</p>
           <% end %>
         </li>
       </ul>
@@ -40,7 +40,7 @@
           <li><a href="#"><strong>Material</strong></a></li>
 
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Labours<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Labours</strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Add New Labour", new_labour_path %></li>
               <li><%= link_to "View All Labours", labours_path %></li>
@@ -49,14 +49,14 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Clients<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Clients</strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Add New Client", new_client_path %></li>
               <li><%= link_to "View All Clients", clients_path %></li>
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Works</strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Add New Work", new_work_path %></li>
               <li><%= link_to "View All Works", works_path %></li>
@@ -64,13 +64,13 @@
           </li>
               <li><%= link_to "Attendance", attendances_path %></li>
               <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Payments<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Payments</strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Payments Labour", payments_path %></li>
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Reports</strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Short Report", reports_index_path(startdate: (Date.today - 1.month), enddate: Date.today) %></li>
               <li><%= link_to "Long Report", reports_long_path %></li>
