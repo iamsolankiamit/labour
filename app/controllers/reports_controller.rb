@@ -1,5 +1,11 @@
 class ReportsController < ApplicationController
   def index
+    @index = Index.new
+    if params[:date]
+      @date = Date.strptime(params[:date],"%d-%m-%Y")
+    else
+      @date = Date.today
+    end
     @labour = Labour.where("labours.on_vacation is not true").order(:first_name)
   end
   def long
