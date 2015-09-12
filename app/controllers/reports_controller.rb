@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   def index
-    @index = Index.new
+    @report = Report.new
     if params[:date]
       @date = Date.strptime(params[:date],"%d-%m-%Y")
     else
