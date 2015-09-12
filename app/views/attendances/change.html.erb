@@ -13,7 +13,7 @@
       <label for="presenty"> Presenty</label>
       <%= select_tag :presence, options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true, class: "hours" %>
       <button type="submit" class="btn btn-primary">Okay</button>
-  <% end -%>
+  <% end -%> 
 
   </div>
 </div>
@@ -24,3 +24,6 @@
     $( "#datepickerend" ).datepicker( {"dateFormat": "dd-mm-yy"});
   });
   </script>
+
+
+  <!-- value="<%= params[:startdate] -->
