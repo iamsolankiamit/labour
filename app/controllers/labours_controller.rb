@@ -74,6 +74,9 @@ class LaboursController < ApplicationController
     start = params[:start].to_date
     end_date = params[:end].to_date
     labour = Labour.find(params[:labour][:id])
+    if cookies[:s] == 'c'
+      labour.client_salary =  params [:attendance][:full_name]
+      labour.save!
     start.upto(end_date) do |date|
       a = Attendance.where(labour_id: labour.id, date: date).first
       unless a.nil?
@@ -140,6 +143,6 @@ class LaboursController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def labour_params
-      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining,:account, :salary_per_day, :salary_for_hours, :on_vacation, :has_left, :work_id,:account_setteled_on,:client_salary)
+      params.require(:labour).permit(:first_name, :last_name, :phone_no, :date_of_joining,:account, :salary_per_day, :salary_for_hours, :on_vacation, :has_left, :work_id,:account_setteled_on,:client_salary,:full_name)
     end
   end
