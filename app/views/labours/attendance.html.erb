@@ -22,7 +22,11 @@
       <%= select_tag "hours", options_for_select({"A" => 0,"'" => 2,"''" => 4,"'''" => 6,"P" => 8,"P'" => 10,"P''" => 12,"P'''" => 14,"PP" => 16,"PP'" => 18,"PP''" => 20,"PP'''" => 22,"PPP" => 24}), include_blank: true, class: "hours form-control" %>
       </div>
   
-      
+      <div class="form-group">
+      <label for="work_id" class= "control-label">Client</label>
+      <%= select_tag "work_id", options_for_select(work_array, work_array.first[1]) , class: "form-control" %>
+      </div>
+  
 
       <div class="form-group">
       <button type="submit" class="btn btn-primary">Okay</button>
