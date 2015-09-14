@@ -74,9 +74,6 @@ class LaboursController < ApplicationController
     start = params[:start].to_date
     end_date = params[:end].to_date
     labour = Labour.find(params[:labour][:id])
-    if cookies[:s] == 'c'
-      labour.client_salary =  params [:attendance][:full_name]
-      labour.save!
     start.upto(end_date) do |date|
       a = Attendance.where(labour_id: labour.id, date: date).first
       unless a.nil?
